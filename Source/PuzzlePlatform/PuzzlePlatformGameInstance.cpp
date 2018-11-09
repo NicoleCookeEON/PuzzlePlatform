@@ -5,18 +5,31 @@
 //Lets us get auto complete for the engine 
 #include "Engine/Engine.h"
 
+//Lets us use the FClassFinder ConstructorHelpers
+#include "UObject/ConstructorHelpers.h"
+
+#include "PlatformTrigger.h"
+
 
 
 UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitializer & ObjectInitializer)
 {
 	// This is to get the game instance to work in a constructor mode
-	UE_LOG(LogTemp, Warning, TEXT("GameInstance Constructor"));
+	//UE_LOG(LogTemp, Warning, TEXT("GameInstance Constructor"));
+
+	//This is the FClassFinder
+	ConstructorHelpers::FClassFinder<APlatformTrigger> PlatformTriggerBPClass(TEXT("/Game/PuzzlePlatforms/BP_PlatformTrigger"));
+
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(PlatformTriggerBPClass.Class != nullptr)) return;
+
+	// This is to get the game instance to work in a game instances
+	UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *PlatformTriggerBPClass.Class->GetName());
 }
 
 void UPuzzlePlatformGameInstance::Init()
 {
-	// This is to get the game instance to work in a game instances
-	UE_LOG(LogTemp, Warning, TEXT("GameInstance Init"));
+			
 }
 
 // This gets the users to enter commands into the consolse while playing
