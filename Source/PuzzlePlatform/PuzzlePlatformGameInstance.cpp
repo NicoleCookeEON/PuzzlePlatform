@@ -50,6 +50,26 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 
 	//This adds the widget to the viewport
 	Menu->AddToViewport();
+
+	//Client connecting to a server using an IP address in the command line in the editor 
+	APlayerController* PlayerController = GetFirstLocalPlayerController();
+
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(PlayerController != nullptr)) return;
+
+	//This creates the input through a struct 
+	FInputModeUIOnly InputModeData;
+
+	//This converts the bwidget and converts into a swidget
+	InputModeData.SetWidgetToFocus(Menu->TakeWidget());
+
+	//This locks the mouse on to the screen onto the viewport
+	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+
+	//This takes the playercontroller to set the inputdata on the screen 
+	PlayerController->SetInputMode(InputModeData);
+
+	PlayerController->bShowMouseCursor = true;
 }
 
 // This gets the users to enter commands into the consolse while playing
