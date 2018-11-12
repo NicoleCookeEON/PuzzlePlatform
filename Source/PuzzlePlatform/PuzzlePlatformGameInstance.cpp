@@ -8,6 +8,9 @@
 //Lets us use the FClassFinder ConstructorHelpers
 #include "UObject/ConstructorHelpers.h"
 
+//This allows us to use widgets in c++
+#include "Blueprint/UserWidget.h"
+
 #include "PlatformTrigger.h"
 
 
@@ -17,19 +20,36 @@ UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitialize
 	// This is to get the game instance to work in a constructor mode
 	//UE_LOG(LogTemp, Warning, TEXT("GameInstance Constructor"));
 
-	//This is the FClassFinder
-	ConstructorHelpers::FClassFinder<APlatformTrigger> PlatformTriggerBPClass(TEXT("/Game/PuzzlePlatforms/BP_PlatformTrigger"));
+	//This is the FClassFinder for trigegr platform to print out we have found it, then changed to UUserWidget
+	ConstructorHelpers::FClassFinder<UUserWidget> MenuBPClass(TEXT("/Game/MenuSystem/WBP_MainMenu"));
 
 	// The engine can return null, so this is put in to return null incase
-	if (!ensure(PlatformTriggerBPClass.Class != nullptr)) return;
+	if (!ensure(MenuBPClass.Class != nullptr)) return;
 
-	// This is to get the game instance to work in a game instances
-	UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *PlatformTriggerBPClass.Class->GetName());
+	//Save to my menu class to get hold of the T sub class object
+	MenuClass = MenuBPClass.Class;
 }
 
 void UPuzzlePlatformGameInstance::Init()
 {
-			
+	// This is to get the game instance to work in a game instances
+	UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *MenuClass->GetName());
+}
+
+//This loads the first screen main menu seen on launch
+void UPuzzlePlatformGameInstance::LoadMenu()
+{
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(MenuClass != nullptr)) return;
+
+	// This is creating the widget
+	UUserWidget* Menu = CreateWidget<UUserWidget>(this, MenuClass);
+
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(Menu != nullptr)) return;
+
+	//This adds the widget to the viewport
+	Menu->AddToViewport();
 }
 
 // This gets the users to enter commands into the consolse while playing

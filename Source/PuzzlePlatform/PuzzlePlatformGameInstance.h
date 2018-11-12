@@ -21,6 +21,10 @@ public:
 		// This is to get the game instance to work in a game instances
 		virtual void Init();
 
+		//This loads the first screen main menu seen on launch
+		UFUNCTION(BlueprintCallable)
+		void LoadMenu();
+
 		// This gets the users to enter commands into the consolse while playing
 		UFUNCTION(Exec)
 		void Host();
@@ -28,4 +32,8 @@ public:
 		// This will print join to the screen 
 		UFUNCTION(Exec)
 		void Join(const FString& Address);
+
+private:
+		//Using the FClassFinder TSubClassOf for the UUser widget
+		TSubclassOf<class UUserWidget>MenuClass;
 };
