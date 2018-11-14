@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "MenuInterface.h"
+// Generated is always last as it needs to be
 #include "MainMenu.generated.h"
 
 /**
@@ -29,4 +31,7 @@ private:
 
 	UFUNCTION()
 	void HostServer();
+
+	// This points to our MenuInterface
+	IMenuInterface* MenuInterface;
 };

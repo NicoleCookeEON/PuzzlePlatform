@@ -21,13 +21,18 @@ bool UMainMenu::Initialize()
 	Host->OnClicked.AddDynamic(this, &UMainMenu::HostServer);
 
 	return true;
-
 }
 
 void UMainMenu::HostServer()
 {
 	// Prints out host button being clicked event
-	UE_LOG(LogTemp, Warning, TEXT("I'm gonna host a server!"));
+	//UE_LOG(LogTemp, Warning, TEXT("I'm gonna host a server!"));
+
+	if (MenuInterface != nullptr)
+	{
+		// Use this and call the host button
+		MenuInterface->Host();
+	}
 }
 
 
