@@ -23,6 +23,12 @@ bool UMainMenu::Initialize()
 	return true;
 }
 
+// This gets the host button to now host when clicked
+void UMainMenu::SetMenuInterface(IMenuInterface* MenuInterface)
+{
+	this->MenuInterface = MenuInterface;
+}
+
 void UMainMenu::HostServer()
 {
 	// Prints out host button being clicked event

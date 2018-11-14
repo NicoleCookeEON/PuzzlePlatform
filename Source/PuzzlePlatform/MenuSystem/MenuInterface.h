@@ -23,6 +23,4 @@ class PUZZLEPLATFORM_API IMenuInterface
 public:
 	// This has an empty implementation
 	virtual void Host() = 0;
-	
-	
 };

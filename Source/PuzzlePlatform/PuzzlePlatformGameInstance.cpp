@@ -13,6 +13,9 @@
 
 #include "PlatformTrigger.h"
 
+// This allows us to use the UUserWidget class
+#include "MenuSystem/MainMenu.h"
+
 
 
 UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitializer & ObjectInitializer)
@@ -43,7 +46,7 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 	if (!ensure(MenuClass != nullptr)) return;
 
 	// This is creating the widget
-	UUserWidget* Menu = CreateWidget<UUserWidget>(this, MenuClass);
+	UMainMenu* Menu = CreateWidget<UMainMenu>(this, MenuClass);
 
 	// The engine can return null, so this is put in to return null incase
 	if (!ensure(Menu != nullptr)) return;
@@ -69,7 +72,11 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 	//This takes the playercontroller to set the inputdata on the screen 
 	PlayerController->SetInputMode(InputModeData);
 
+	// This shows the cursor
 	PlayerController->bShowMouseCursor = true;
+
+	// This implements the MenuInterface to be able to use the inherited buttons
+	Menu->SetMenuInterface(this);
 }
 
 // This gets the users to enter commands into the consolse while playing

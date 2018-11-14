@@ -16,6 +16,10 @@ class PUZZLEPLATFORM_API UMainMenu : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+	// This gets the host button to now host when clicked
+	void SetMenuInterface(IMenuInterface* MenuInterface);
+
 protected:
 	// This is going to be able to call the host and join buttons 
 	virtual bool Initialize();
