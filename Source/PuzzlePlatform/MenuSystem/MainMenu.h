@@ -14,9 +14,19 @@ class PUZZLEPLATFORM_API UMainMenu : public UUserWidget
 {
 	GENERATED_BODY()
 
+protected:
+	// This is going to be able to call the host and join buttons 
+	virtual bool Initialize();
+
+private:
+	// This binds the host button in the WBP_MainMenu
 	UPROPERTY(meta = (BindWidget))
 	class UButton* Host;
-	
+
+	// This binds the join button in the WBP_MainMenu
 	UPROPERTY(meta = (BindWidget))
 	class UButton* Join;
+
+	UFUNCTION()
+	void HostServer();
 };
