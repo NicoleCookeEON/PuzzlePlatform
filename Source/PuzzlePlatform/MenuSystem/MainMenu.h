@@ -20,6 +20,12 @@ public:
 	// This gets the host button to now host when clicked
 	void SetMenuInterface(IMenuInterface* MenuInterface);
 
+	// Setup
+	void Setup();
+
+	//Deactivates the cursor so the user can use the playercontroller
+	void Teardown();
+	
 protected:
 	// This is going to be able to call the host and join buttons 
 	virtual bool Initialize();

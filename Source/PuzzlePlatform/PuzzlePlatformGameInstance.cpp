@@ -46,34 +46,13 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 	if (!ensure(MenuClass != nullptr)) return;
 
 	// This is creating the widget
-	UMainMenu* Menu = CreateWidget<UMainMenu>(this, MenuClass);
+	Menu = CreateWidget<UMainMenu>(this, MenuClass);
 
 	// The engine can return null, so this is put in to return null incase
 	if (!ensure(Menu != nullptr)) return;
 
-	//This adds the widget to the viewport
-	Menu->AddToViewport();
-
-	//Client connecting to a server using an IP address in the command line in the editor 
-	APlayerController* PlayerController = GetFirstLocalPlayerController();
-
-	// The engine can return null, so this is put in to return null incase
-	if (!ensure(PlayerController != nullptr)) return;
-
-	//This creates the input through a struct 
-	FInputModeUIOnly InputModeData;
-
-	//This converts the bwidget and converts into a swidget
-	InputModeData.SetWidgetToFocus(Menu->TakeWidget());
-
-	//This locks the mouse on to the screen onto the viewport
-	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-
-	//This takes the playercontroller to set the inputdata on the screen 
-	PlayerController->SetInputMode(InputModeData);
-
-	// This shows the cursor
-	PlayerController->bShowMouseCursor = true;
+	//Calling the MainMenu
+	Menu->Setup();
 
 	// This implements the MenuInterface to be able to use the inherited buttons
 	Menu->SetMenuInterface(this);
@@ -82,6 +61,12 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 // This gets the users to enter commands into the consolse while playing
 void UPuzzlePlatformGameInstance::Host()
 {
+	////Deactivates the cursor so the user can use the playercontroller
+	if (Menu != nullptr)
+	{
+		Menu->Teardown();
+	}
+
 	// Log this out to the screen not to the console, lets the user see things on the screen 
 	UEngine* Engine = GetEngine();
 

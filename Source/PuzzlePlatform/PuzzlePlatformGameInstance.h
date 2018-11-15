@@ -38,4 +38,7 @@ public:
 private:
 		//Using the FClassFinder TSubClassOf for the UUser widget
 		TSubclassOf<class UUserWidget>MenuClass;
+
+		//Deactivates the cursor so the user can use the playercontroller
+		class UMainMenu* Menu;
 };
