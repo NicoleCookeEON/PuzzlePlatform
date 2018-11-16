@@ -8,6 +8,8 @@
 // Generated is always last as it needs to be
 #include "MainMenu.generated.h"
 
+
+
 /**
  * 
  */
@@ -42,7 +44,11 @@ private:
 	// This binds the CancelJoinMenu button in the WBP_MainMenu
 	UPROPERTY(meta = (BindWidget))
 	class UButton* CancelJoinMenuButton;
-
+	
+	// This binds the ConfirmJoinMenuButton button in the WBP_MainMenu
+	UPROPERTY(meta = (BindWidget))
+	class UButton* ConfirmJoinMenuButton;
+	
 	// This binds the WidgetSwitcher in the WBP_MainMenu
 	UPROPERTY(meta = (BindWidget))
 	class UWidgetSwitcher* WidgetMenuSwitcher;
@@ -55,9 +61,17 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UWidget* JoinMenu;
 
+	// This binds the EditableText Box for the IPAddressFeild to be usable in the WBP_MainMenu
+	UPROPERTY(meta = (BindWidget))
+	class UEditableTextBox* IPAddressFeild;
+
 	// This binds the HostButton in the WBP_MainMenu
 	UFUNCTION()
 	void HostServer();
+	
+	// This binds the JoinButton in the WBP_MainMenu
+	UFUNCTION()
+	void JoinServer();
 
 	// This binds the OpenJoinMenu in the WBP_MainMenu
 	UFUNCTION()

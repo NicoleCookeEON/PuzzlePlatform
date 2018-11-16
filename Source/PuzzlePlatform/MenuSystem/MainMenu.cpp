@@ -8,6 +8,9 @@
 // This gets the WidgetSwitcher header
 #include "Components/WidgetSwitcher.h"
 
+// This gets the EditableTextBox header to use the IP adrress function
+#include "Components/EditableTextBox.h"
+
 
 
 // This is going to be able to call the host and join buttons
@@ -37,6 +40,13 @@ bool UMainMenu::Initialize()
 
 	// CancelJoinMenuButton being clicked event
 	CancelJoinMenuButton->OnClicked.AddDynamic(this, &UMainMenu::OpenMainMenu);
+	// The engine can return null, so this is put in to return null incase
+
+	// Returning false so that if the null is false then we fail the Initialize
+	if (!ensure(ConfirmJoinMenuButton != nullptr)) return false;
+
+	// ConfirmJoinMenuButton being clicked event
+	ConfirmJoinMenuButton->OnClicked.AddDynamic(this, &UMainMenu::JoinServer);
 
 	return true;
 }
@@ -116,6 +126,19 @@ void UMainMenu::HostServer()
 	{
 		// Use this and call the host button
 		MenuInterface->Host();
+	}
+}
+
+void UMainMenu::JoinServer()
+{
+	// This is to be able to enter text into the IPAddressFeild and this will be taken to the ConfirmJoinButton
+	if (MenuInterface != nullptr)
+	{
+		// The engine can return null, so this is put in to return null incase
+		if (!ensure(IPAddressFeild != nullptr)) return;
+
+		const FString Address = IPAddressFeild->GetText().ToString();
+		MenuInterface->Join(Address);
 	}
 }
 

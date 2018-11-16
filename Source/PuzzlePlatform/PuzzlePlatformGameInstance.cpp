@@ -89,6 +89,12 @@ void UPuzzlePlatformGameInstance::Host()
 
 void UPuzzlePlatformGameInstance::Join(const FString& Address)
 {
+	////Deactivates the cursor so the user can use the playercontroller
+	if (Menu != nullptr)
+	{
+		Menu->Teardown();
+	}
+	
 	// Log this out to the screen not to the console, lets the user see things on the screen 
 	UEngine* Engine = GetEngine();
 
