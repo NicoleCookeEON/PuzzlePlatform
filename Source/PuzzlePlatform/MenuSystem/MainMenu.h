@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "MenuInterface.h"
+
+// This allows us to use the UUserWidget class
+#include "MenuSystem/MenuWidget.h"
+
 // Generated is always last as it needs to be
 #include "MainMenu.generated.h"
 
@@ -14,20 +17,10 @@
  * 
  */
 UCLASS()
-class PUZZLEPLATFORM_API UMainMenu : public UUserWidget
+class PUZZLEPLATFORM_API UMainMenu : public UMenuWidget
 {
 	GENERATED_BODY()
 
-public:
-	// This gets the host button to now host when clicked
-	void SetMenuInterface(IMenuInterface* MenuInterface);
-
-	// Setup
-	void Setup();
-
-	//Deactivates the cursor so the user can use the playercontroller
-	void Teardown();
-	
 protected:
 	// This is going to be able to call the host and join buttons 
 	virtual bool Initialize();
@@ -81,6 +74,5 @@ private:
 	UFUNCTION()
 	void OpenMainMenu();
 
-	// This points to our MenuInterface
-	IMenuInterface* MenuInterface;
+	
 };

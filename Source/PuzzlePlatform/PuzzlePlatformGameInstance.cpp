@@ -16,6 +16,8 @@
 // This allows us to use the UUserWidget class
 #include "MenuSystem/MainMenu.h"
 
+// This allows us to use the UUserWidget class
+#include "MenuSystem/MenuWidget.h"
 
 
 UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitializer & ObjectInitializer)
@@ -31,6 +33,15 @@ UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitialize
 
 	//Save to my menu class to get hold of the T sub class object
 	MenuClass = MenuBPClass.Class;
+
+	//This is the FClassFinder for trigegr platform to print out we have found it, then changed to UUserWidget InGameMenu
+	ConstructorHelpers::FClassFinder<UUserWidget> InGameMenuBPClass(TEXT("/Game/MenuSystem/WBP_InGameMenu"));
+
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(InGameMenuBPClass.Class != nullptr)) return;
+
+	//Save to my InGameMenu class to get hold of the T sub class object
+	InGameMenuClass = InGameMenuBPClass.Class;
 }
 
 void UPuzzlePlatformGameInstance::Init()
@@ -47,6 +58,24 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 
 	// This is creating the widget
 	Menu = CreateWidget<UMainMenu>(this, MenuClass);
+
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(Menu != nullptr)) return;
+
+	//Calling the MainMenu
+	Menu->Setup();
+
+	// This implements the MenuInterface to be able to use the inherited buttons
+	Menu->SetMenuInterface(this);
+}
+
+void UPuzzlePlatformGameInstance::InGameLoadMenu()
+{
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(InGameMenuClass != nullptr)) return;
+
+	// This is creats a UUserWidget to convert into a UMenuWidget
+	UMenuWidget* Menu = CreateWidget<UMenuWidget>(this, InGameMenuClass);
 
 	// The engine can return null, so this is put in to return null incase
 	if (!ensure(Menu != nullptr)) return;

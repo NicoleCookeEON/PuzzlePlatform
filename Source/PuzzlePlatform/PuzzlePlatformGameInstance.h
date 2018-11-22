@@ -27,6 +27,10 @@ public:
 		UFUNCTION(BlueprintCallable)
 		void LoadMenu();
 
+		//This loads the first screen InGameMenu seen on launch
+		UFUNCTION(BlueprintCallable)
+		void InGameLoadMenu();
+
 		// This gets the users to enter commands into the consolse while playing
 		UFUNCTION(Exec)
 		void Host();
@@ -36,8 +40,11 @@ public:
 		void Join(const FString& Address);
 
 private:
-		//Using the FClassFinder TSubClassOf for the UUser widget
+		//Using the FClassFinder TSubClassOf for the UUser widget MainMenu
 		TSubclassOf<class UUserWidget>MenuClass;
+
+		//Using the FClassFinder TSubClassOf for the UUser widget InGameMenu
+		TSubclassOf<class UUserWidget>InGameMenuClass;
 
 		//Deactivates the cursor so the user can use the playercontroller
 		class UMainMenu* Menu;
