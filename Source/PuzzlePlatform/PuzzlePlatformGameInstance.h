@@ -33,11 +33,14 @@ public:
 
 		// This gets the users to enter commands into the consolse while playing
 		UFUNCTION(Exec)
-		void Host();
+		void Host() override;
 
 		// This will print join to the screen 
 		UFUNCTION(Exec)
-		void Join(const FString& Address);
+		void Join(const FString& Address) override;
+
+		// This allows us to go from the game back to the main menu when selecting Quit Button
+		virtual void LoadMainMenu() override;
 
 private:
 		//Using the FClassFinder TSubClassOf for the UUser widget MainMenu
@@ -48,4 +51,5 @@ private:
 
 		//Deactivates the cursor so the user can use the playercontroller
 		class UMainMenu* Menu;
+
 };

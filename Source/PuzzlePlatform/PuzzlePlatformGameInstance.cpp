@@ -143,3 +143,19 @@ void UPuzzlePlatformGameInstance::Join(const FString& Address)
 
 	PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 }
+
+// This allows us to go from the game back to the main menu when selecting Quit Button
+// This only uses the ClientTravel (not the server travel), so it allows the server and clients to go back to the MainMenu.
+// This also makes sure that the serevr client won't pull all clients with it when travelling back to the MainMenu
+void UPuzzlePlatformGameInstance::LoadMainMenu()
+{
+	//Client connecting to a server using an IP address in the command line in the editor 
+	APlayerController* PlayerController = GetFirstLocalPlayerController();
+	
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(PlayerController != nullptr)) return;
+
+	// Using a srting instead of the address to travel back to the map
+	// Don't put listen because we arn't trying to host a server
+	PlayerController->ClientTravel("/Game/MenuSystem/MainMenu", ETravelType::TRAVEL_Absolute);
+}

@@ -24,4 +24,7 @@ public:
 	// This has an empty implementation
 	virtual void Host() = 0;
 	virtual void Join(const FString& Address) = 0;
+
+	// This allows us to go from the game back to the main menu when selecting Quit Button
+	virtual void LoadMainMenu() = 0;
 };

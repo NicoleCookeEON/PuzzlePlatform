@@ -16,7 +16,7 @@
 // This is going to be able to call the host and join buttons
 bool UMainMenu::Initialize()
 {
-	// Call the super Initialize
+	// Returning early if super failed to Initialize
 	bool Success = Super::Initialize();
 	if (!Success) return false;
 
