@@ -34,7 +34,11 @@ private:
 	UPROPERTY(meta = (BindWidget))
 	class UButton* JoinButton;
 
-	// This binds the CancelJoinMenu button in the WBP_MainMenu
+	// This binds the Quit button in the WBP_MainMenu
+	UPROPERTY(meta = (BindWidget))
+	class UButton* QuitButton;
+	
+		// This binds the CancelJoinMenu button in the WBP_MainMenu
 	UPROPERTY(meta = (BindWidget))
 	class UButton* CancelJoinMenuButton;
 	
@@ -74,5 +78,7 @@ private:
 	UFUNCTION()
 	void OpenMainMenu();
 
-	
+	// This binds the OpenMainMenu in the WBP_MainMenu
+	UFUNCTION()
+	void QuitPressed();
 };

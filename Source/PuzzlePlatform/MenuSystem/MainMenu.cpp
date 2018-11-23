@@ -36,6 +36,13 @@ bool UMainMenu::Initialize()
 
 	// The engine can return null, so this is put in to return null incase
 	// Returning false so that if the null is false then we fail the Initialize
+	if (!ensure(QuitButton != nullptr)) return false;
+
+	// Quit button being clicked event
+	QuitButton->OnClicked.AddDynamic(this, &UMainMenu::QuitPressed);
+
+	// The engine can return null, so this is put in to return null incase
+	// Returning false so that if the null is false then we fail the Initialize
 	if (!ensure(CancelJoinMenuButton != nullptr)) return false;
 
 	// CancelJoinMenuButton being clicked event
@@ -98,6 +105,23 @@ void UMainMenu::OpenMainMenu()
 
 	//WidgetMenuSwitcher switch to another widget
 	WidgetMenuSwitcher->SetActiveWidget(MainMenu);
+}
+
+void UMainMenu::QuitPressed()
+{
+	//check the world is not null
+	UWorld* World = GetWorld();
+
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(World != nullptr)) return;
+
+	//Client connecting to a server using an IP address in the command line in the editor 
+	APlayerController* PlayerController = World->GetFirstPlayerController();
+
+	// The engine can return null, so this is put in to return null incase
+	if (!ensure(PlayerController != nullptr)) return;
+
+	PlayerController->ConsoleCommand("quit");
 }
 
 
